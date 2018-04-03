@@ -122,12 +122,18 @@ def get_or_create_todolist(title, item_strings=[]):
 @app.route('/', methods=["GET", "POST"])
 def index():
     form = TodoListForm()
-    if request.method == "POST":
+    if request.method == "POST" and form.validate_on_submit():
         title = form.name.data
         items_data = form.items.data
         new_list = get_or_create_todolist(title, items_data.split("\n"))
         return redirect(url_for('all_lists'))
+    errors = [v for v in form.errors.values()]
+    if len(errors) > 0:
+        flash("!!!! ERRORS IN FORM SUBMISSION - " + str(errors))
+
     return render_template('index.html', form=form)
+
+
 
 
 # Provided - see below for additional TODO
