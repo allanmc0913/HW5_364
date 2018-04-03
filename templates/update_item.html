@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block nav %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<form action="/update/{{ item_name }}" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.new_priority.label }} {{ form.new_priority() }}<br>
+    {{ form.submit() }}<br>
+</form>
+
+<div>
+{% for message in get_flashed_messages() %}
+{{ message }}
+{% endfor %}
+</div>
+
+
+<div>
+{% for message in get_flashed_messages() %}
+<strong>*** {{ message }} ***</strong>
+{% endfor %}
+</div>
+
+{% endblock %}
